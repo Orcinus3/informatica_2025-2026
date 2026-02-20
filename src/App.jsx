@@ -1,14 +1,10 @@
 import "./App.css";
-import Tiptap from "./Tiptap";
-import { useCurrentEditor } from "@tiptap/react";
+import HomePage from "./components/HomePage/HomePage";
 
 function App() {
-  const { editor } = useCurrentEditor();
-
   return (
     <>
-      <Tiptap></Tiptap>
-      <h1>{editor}</h1>
+      <HomePage></HomePage>
     </>
   );
 }
