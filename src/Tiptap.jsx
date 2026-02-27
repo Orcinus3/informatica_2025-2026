@@ -16,7 +16,11 @@ const Tiptap = () => {
 
   return (
     <EditorContext.Provider value={providerValue}>
-      <EditorContent editor={editor} />
+      <form action="/api" method="POST">
+        <EditorContent editor={editor} />
+        <input type="text" name="username" />
+        <button type="submit">Submit</button>
+      </form>
     </EditorContext.Provider>
   );
 };
