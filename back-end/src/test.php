@@ -13,7 +13,7 @@ $username = $_POST["username"];
 
 <body>
     <h1>
-        <?php echo "hello $username" ?>
+        <?php echo "hello2 $username" ?>
     </h1>
 </body>
 
