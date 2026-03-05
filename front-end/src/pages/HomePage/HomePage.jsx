@@ -1,7 +1,7 @@
-import Note from "../Note/Note";
+import Note from "../../components/Note/Note";
 import Tiptap from "../../Tiptap";
-import Header from "../Header/Header";
-import Footer from "../Footer/Footer";
+import Header from "../../components/Header/Header";
+import Footer from "../../components/Footer/Footer";
 
 function HomePage() {
   return (
