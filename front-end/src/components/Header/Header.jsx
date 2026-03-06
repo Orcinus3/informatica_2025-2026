@@ -10,6 +10,7 @@ function Header() {
           <a href="#">Home</a>
           <a href="#">Your Notes</a>
           <a href="#">About</a>
+          <a href="#">GitHub</a>
         </nav>
       </div>
     </header>
