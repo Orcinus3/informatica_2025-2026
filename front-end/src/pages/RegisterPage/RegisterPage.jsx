@@ -1,6 +1,13 @@
+import { useNavigate } from "react-router-dom";
 import styles from "./RegisterPage.module.css";
 
 function RegisterPage() {
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+    navigate("/login");
+  };
+
   return (
     <>
       <h1 className={styles.h1}>Register</h1>
@@ -23,6 +30,9 @@ function RegisterPage() {
           CREATE ACCOUNT
         </button>
       </form>
+      <a onClick={handleClick} className={styles.a}>
+        Already have an account?
+      </a>
     </>
   );
 }
