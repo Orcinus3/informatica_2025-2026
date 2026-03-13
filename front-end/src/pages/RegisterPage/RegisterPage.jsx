@@ -11,7 +11,7 @@ function RegisterPage() {
   return (
     <>
       <h1 className={styles.h1}>Register</h1>
-      <form action="register.php" method="post" className={styles.form}>
+      <form action="/api/register.php" method="post" className={styles.form}>
         <input
           type="text"
           name="username"

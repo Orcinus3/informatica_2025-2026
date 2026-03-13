@@ -12,7 +12,7 @@ function LoginPage() {
     <div className={styles.html}>
       <h1>Login</h1>
 
-      <form action="login.php" method="post" className={styles.form}>
+      <form action="/api/login.php" method="post" className={styles.form}>
         <input
           type="text"
           name="username"

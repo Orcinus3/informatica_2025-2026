@@ -7,7 +7,7 @@ services:
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: my_database
+      MYSQL_DATABASE: progetto_fine_anno
       MYSQL_USER: my_user
       MYSQL_PASSWORD: my_password
     ports:

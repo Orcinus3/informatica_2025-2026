@@ -1,8 +1,5 @@
-import Note from "../../components/Note/Note";
-import Tiptap from "../../Tiptap";
 import Header from "../../components/Header/Header";
 import Footer from "../../components/Footer/Footer";
-import LoginPage from "../LoginPage/LoginPage";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 
