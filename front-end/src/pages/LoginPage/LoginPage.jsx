@@ -55,7 +55,7 @@ function LoginPage() {
           onClick={handleClick}
           className="text-blue-400 hover:text-blue-600"
         >
-          Already have an account?
+          Don't have an account?
         </button>
         <a
           onClick={() => navigate("/")}

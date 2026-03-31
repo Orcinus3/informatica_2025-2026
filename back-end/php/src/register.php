@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 require_once 'config/connect.php';
 
@@ -16,6 +16,12 @@ $stmt->bindParam(':email', $email, PDO::PARAM_STR);
 $stmt->execute();
 $tables = $stmt->fetchAll();
 
+echo "info" . "<br>";
+echo $username . "<br>";
+echo $email . "<br>";
+echo $password . "<br>";
+
+
 if (!empty($tables)) {
     echo "Account already exists.";
 } else {
@@ -24,9 +30,6 @@ if (!empty($tables)) {
     $stmt->bindParam(':username', $username, PDO::PARAM_STR);
     $stmt->bindParam(':email', $email, PDO::PARAM_STR);
     $stmt->bindParam(':password', $password, PDO::PARAM_STR);
-    
+
     $stmt->execute();
 }
-
-
-?>

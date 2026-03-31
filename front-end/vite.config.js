@@ -8,7 +8,7 @@ export default defineConfig({
   server: {
     proxy: {
       "/api": {
-        target: "http://localhost:8080/",
+        target: "http://localhost/back-end/php/src",
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api/, ""),
       },

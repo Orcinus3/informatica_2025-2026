@@ -25,3 +25,7 @@ CREATE TABLE Notes (
     category VARCHAR(255),
     FOREIGN KEY (folder_id) REFERENCES Folders (folder_id)
 )
+
+CREATE TABLE Preferences ()
+
+CREATE TABLE Admins ()

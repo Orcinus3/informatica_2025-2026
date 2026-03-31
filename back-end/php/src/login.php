@@ -1,6 +1,6 @@
-<?php 
+<?php
 
-require_once 'config/connect.php';
+require_once './config/connect.php';
 
 $username = $_POST["username"];
 $email = $_POST["email"];
@@ -25,10 +25,6 @@ if (!empty($tables)) {
     $stmt->bindParam(':password', $password);
 
     $stmt->execute();
-
 } else {
     echo "Account doesn't exist.";
 }
-
-
-?>
