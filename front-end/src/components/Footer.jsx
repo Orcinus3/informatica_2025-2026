@@ -1,9 +1,7 @@
-import "./Footer.module.css";
-
 function Footer() {
   return (
-    <footer className="footer">
-      <div className="container">
+    <footer className="">
+      <div className="">
         <p>© 2026 Erudition. All rights reserved.</p>
       </div>
     </footer>

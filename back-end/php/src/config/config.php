@@ -1,6 +1,6 @@
 <?php
 
-$host = '127.0.0.1';
+$host = 'localhost';
 $db = 'progetto_fine_anno';
 $user = 'root';
-$password = 'root';
+$password = '';

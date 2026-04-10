@@ -1,6 +1,6 @@
 <?php
 
-require_once './config/connect.php';
+require './config/connect.php';
 
 $username = $_POST["username"];
 $email = $_POST["email"];
@@ -17,7 +17,7 @@ $stmt->execute();
 $tables = $stmt->fetchAll();
 
 if (!empty($tables)) {
-    $query2 = 'INSERT INTO Users(username, email, password) VALUES($username, $email, $password)';
+    $query2 = 'INSERT INTO Users(username, email, password) VALUES(:username, :email, :password)';
     $stmt = $conn->prepare($query2);
 
     $stmt->bindParam(':username', $username);
@@ -25,6 +25,13 @@ if (!empty($tables)) {
     $stmt->bindParam(':password', $password);
 
     $stmt->execute();
+    echo "<br>";
+    echo "login successfull";
+
+    header("Location: http://localhost:5173");
+    header('Access-Control-Allow-Origin: http://localhost:5173/login');
+    $user = $_POST['username'];
+    echo ("Hello from server: $user");
 } else {
     echo "Account doesn't exist.";
 }
