@@ -1,6 +1,6 @@
 <?php
 
-require_once 'config.php';
+require_once "config.php";
 
 $dsn = "mysql:host=$host;dbname=$db;charset=UTF8";
 
@@ -9,10 +9,9 @@ try {
 
     $conn = new PDO($dsn, $user, $password, $options);
 
-    if ($conn) {
+    /* if ($conn) {
         echo "Connected to the $db database succefully!";
-    }
+    } */
 } catch (PDOException $e) {
     echo $e->getMessage();
-    echo "aaaaaaaaaaaaaaaaaaaaaaaaaaaa";
 }
