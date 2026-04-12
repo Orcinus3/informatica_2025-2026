@@ -1,22 +1,31 @@
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
 import Header from "../components/Header/Header";
 import Footer from "../components/Footer";
-import { useNavigate } from "react-router-dom";
-import { useEffect } from "react";
 
 function HomePage() {
   const navigate = useNavigate();
-  let isLogged = true;
+  const { isLogged } = useAuth();
 
   useEffect(() => {
     if (!isLogged) {
       navigate("/login", { replace: true });
     }
-  }, []);
+  }, [isLogged, navigate]);
+
+  // prevent rendering content while the redirect is happening
+  if (!isLogged) {
+    return null;
+  }
 
   return (
     <>
-      <Header></Header>
-      <Footer></Footer>
+      <Header />
+      <main className="min-h-screen flex items-center justify-center">
+        <h1 className="text-3xl font-bold">Welcome to the Home Page!</h1>
+      </main>
+      <Footer />
     </>
   );
 }

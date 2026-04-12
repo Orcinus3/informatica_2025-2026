@@ -1,21 +1,54 @@
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../context/AuthContext";
 
 function LoginPage() {
   const navigate = useNavigate();
+  const { login } = useAuth();
+  const [error, setError] = useState("");
 
   function handleClick() {
     navigate("/register");
   }
+
+  const handleLogin = async (event) => {
+    event.preventDefault();
+    setError("");
+
+    // https://developer.mozilla.org/en-US/docs/Web/API/FormData
+    const formData = new FormData(event.target);
+
+    try {
+      const response = await fetch("api/login.php", {
+        method: "POST",
+        body: formData,
+      });
+
+      const data = await response.json();
+
+      if (response.ok && data.status === "success") {
+        login(data.username);
+
+        navigate("/");
+      } else {
+        setError(data.message || "Login failed");
+      }
+    } catch (err) {
+      setError("Could not connect to the server.");
+      console.error("Login Error:", err);
+    }
+  };
 
   return (
     <div className="min-h-screen w-full flex items-center justify-center bg-white/85 font-sans">
       <div className="flex flex-col items-center gap-4">
         <h1 className="text-[28px]">Login</h1>
 
+        {error && <p className="text-red-500 text-sm">{error}</p>}
+
         <form
-          action="/api/login.php"
-          method="post"
-          className="w-[500px] p-8 flex flex-col justify-center items-center gap-4 
+          onSubmit={handleLogin}
+          className="w-125 p-8 flex flex-col justify-center items-center gap-4
                      rounded-xl bg-white/85 border border-black shadow-lg"
         >
           <input
@@ -57,12 +90,12 @@ function LoginPage() {
         >
           Don't have an account?
         </button>
-        <a
+        <button
           onClick={() => navigate("/")}
           className="text-blue-400 hover:text-blue-600"
         >
           Link for testing purposes
-        </a>
+        </button>
       </div>
     </div>
   );

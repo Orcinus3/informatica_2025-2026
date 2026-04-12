@@ -1,37 +1,37 @@
 <?php
+require "./config/connect.php";
 
-require './config/connect.php';
+header("Content-Type: application/json");
+header("Access-Control-Allow-Origin: http://localhost:5173");
+header("Access-Control-Allow-Methods: POST, OPTIONS");
+header("Access-Control-Allow-Headers: Content-Type");
 
-$username = $_POST["username"];
-$email = $_POST["email"];
-$password = $_POST["password"];
+// Qualche volta il browser menda un test con OPTIONS (da ignorare)
+if ($_SERVER["REQUEST_METHOD"] === "OPTIONS") {
+    exit();
+}
 
-$query1 = 'SELECT * FROM Users WHERE username = :username AND email = :email';
+$username = $_POST["username"] ?? "";
+$email = $_POST["email"] ?? "";
+$password = $_POST["password"] ?? "";
 
+$query1 = "SELECT * FROM Users WHERE username = :username AND email = :email";
 $stmt = $conn->prepare($query1);
-
-$stmt->bindParam(':username', $username);
-$stmt->bindParam(':email', $email);
-
+$stmt->bindParam(":username", $username);
+$stmt->bindParam(":email", $email);
 $stmt->execute();
-$tables = $stmt->fetchAll();
+$user = $stmt->fetch(PDO::FETCH_ASSOC);
 
-if (!empty($tables)) {
-    $query2 = 'INSERT INTO Users(username, email, password) VALUES(:username, :email, :password)';
-    $stmt = $conn->prepare($query2);
-
-    $stmt->bindParam(':username', $username);
-    $stmt->bindParam(':email', $email);
-    $stmt->bindParam(':password', $password);
-
-    $stmt->execute();
-    echo "<br>";
-    echo "login successfull";
-
-    header("Location: http://localhost:5173");
-    header('Access-Control-Allow-Origin: http://localhost:5173/login');
-    $user = $_POST['username'];
-    echo ("Hello from server: $user");
+if ($user) {
+    echo json_encode([
+        "status" => "success",
+        "message" => "Login successful",
+        "username" => $user["username"],
+    ]);
 } else {
-    echo "Account doesn't exist.";
+    http_response_code(401);
+    echo json_encode([
+        "status" => "error",
+        "message" => "Invalid username or email.",
+    ]);
 }
