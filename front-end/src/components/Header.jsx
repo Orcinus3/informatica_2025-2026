@@ -3,6 +3,10 @@ import { useNavigate } from "react-router-dom";
 function Header() {
   const navigate = useNavigate();
 
+  function handleHomeClick() {
+    navigate("/");
+  }
+
   function handleNotesClick() {
     navigate("/notes");
   }
@@ -17,7 +21,12 @@ function Header() {
         <h2 className="font-bold">Erudition</h2>
 
         <nav className="flex">
-          <a className="ml-5 cursor-pointer no-underline text-[#333]">Home</a>
+          <a
+            onClick={handleHomeClick}
+            className="ml-5 cursor-pointer no-underline text-[#333]"
+          >
+            Home
+          </a>
           <a
             onClick={handleNotesClick}
             className="ml-5 cursor-pointer no-underline text-[#333]"

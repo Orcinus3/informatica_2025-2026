@@ -1,5 +1,12 @@
+import Header from "../components/Header";
+
 function AboutPage() {
-  return <div>This is the About page</div>;
+  return (
+    <div>
+      <Header></Header>
+      <div>This is the About page</div>
+    </div>
+  );
 }
 
 export default AboutPage;
