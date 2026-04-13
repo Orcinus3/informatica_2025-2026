@@ -1,4 +1,3 @@
-import styles from "./Header.module.css";
 import { useNavigate } from "react-router-dom";
 
 function Header() {
@@ -15,17 +14,23 @@ function Header() {
   return (
     <header className="border-b-[1px] border-b-[#eee] bg-white">
       <div className="w-full mx-auto p-5 flex justify-between items-center">
-        <h2 className={styles.logo}>Erudition</h2>
+        <h2 className="font-bold">Erudition</h2>
 
-        <nav className={styles.nav}>
-          <a className="cursor-pointer">Home</a>
-          <a onClick={handleNotesClick} className="cursor-pointer">
+        <nav className="flex">
+          <a className="ml-5 cursor-pointer no-underline text-[#333]">Home</a>
+          <a
+            onClick={handleNotesClick}
+            className="ml-5 cursor-pointer no-underline text-[#333]"
+          >
             Your Notes
           </a>
-          <a onClick={handleAboutClick} className="cursor-pointer">
+          <a
+            onClick={handleAboutClick}
+            className="ml-5 cursor-pointer no-underline text-[#333]"
+          >
             About
           </a>
-          <a className="cursor-pointer">GitHub</a>
+          <a className="ml-5 cursor-pointer no-underline text-[#333]">GitHub</a>
         </nav>
       </div>
     </header>
