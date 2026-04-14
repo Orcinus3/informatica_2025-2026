@@ -1,10 +1,35 @@
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 function RegisterPage() {
+  const [message, setMessage] = useState("");
   const navigate = useNavigate();
 
   const handleClick = () => {
     navigate("/login");
+  };
+
+  const handleRegister = async (e) => {
+    e.preventDefault();
+
+    const formData = new FormData(e.target);
+    try {
+      const response = await fetch("api/register.php", {
+        method: "POST",
+        body: formData,
+      });
+
+      const data = await response.json();
+
+      if (response.ok && data.status === "success") {
+        setMessage(data.message || "Account creation successful.");
+      } else {
+        setMessage(data.message || "Account creation failed.");
+      }
+    } catch (e) {
+      setMessage("Could not connect to the server.");
+      console.error("Login Error:", err);
+    }
   };
 
   return (
@@ -12,9 +37,10 @@ function RegisterPage() {
       <div className="flex flex-col items-center gap-4">
         <h1 className="text-[28px]">Register</h1>
 
+        {message && <p className="text-red-500 text-sm">{message}</p>}
+
         <form
-          action="/api/register.php"
-          method="post"
+          onSubmit={handleRegister}
           className="w-[500px] p-8 flex flex-col justify-center items-center gap-4 
                      rounded-xl bg-white/85 border border-black shadow-lg"
         >
