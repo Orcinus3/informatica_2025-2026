@@ -20,13 +20,13 @@ function HomePage() {
   }
 
   return (
-    <>
+    <div className="min-h-screen flex flex-col">
       <Header />
-      <main className="min-h-screen flex items-center justify-center">
-        <h1 className="text-3xl font-bold">Welcome to the Home Page!</h1>
+      <main className="flex-grow flex items-center justify-center bg-[#f9f9f9]">
+        <h1 className="text-5xl font-serif">This is the homepage.</h1>
       </main>
       <Footer />
-    </>
+    </div>
   );
 }
 
