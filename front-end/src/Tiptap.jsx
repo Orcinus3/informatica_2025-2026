@@ -82,7 +82,7 @@ const Tiptap = ({ initialContent = "" }) => {
 
         <button
           type="submit"
-          className="px-5 py-1.5 bg-[#1a1a1a] text-white text-[14px] font-medium font-mono rounded hover:bg-[#333]  shadow-sm"
+          className="px-5 py-1.5 bg-white border border-gray-350 text-gray-950 text-[14px] font-medium font-mono rounded hover:bg-gray-100 shadow-sm"
         >
           Save Note
         </button>

@@ -20,7 +20,7 @@ function HomePage() {
   }
 
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-[150dvh] flex flex-col">
       <Header />
       <main className="flex-grow flex items-center justify-center bg-[#f9f9f9]">
         <h1 className="text-5xl font-serif">This is the homepage.</h1>

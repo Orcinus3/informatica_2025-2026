@@ -1,8 +1,8 @@
 function Footer() {
   return (
-    <footer className="">
+    <footer className="p-5 flex justify-center bg-purple-500 text-white">
       <div className="">
-        <p>© 2026 Erudition. All rights reserved.</p>
+        <p className="mono-font">© 2026 Erudition. All rights reserved.</p>
       </div>
     </footer>
   );
