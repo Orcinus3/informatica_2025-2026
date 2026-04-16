@@ -3,7 +3,7 @@ import StarterKit from "@tiptap/starter-kit";
 import Underline from "@tiptap/extension-underline";
 import Link from "@tiptap/extension-link";
 
-const Tiptap = ({ initialContent = "" }) => {
+const Tiptap = ({ initialContent = "<p>Example Text</p>" }) => {
   const editor = useEditor({
     extensions: [StarterKit, Underline],
     content: initialContent,
@@ -15,22 +15,51 @@ const Tiptap = ({ initialContent = "" }) => {
     },
   });
 
-  const setLink = () => {
+  function setLink() {
     const url = window.prompt("Enter the URL");
     if (url) {
       editor.chain().focus().setLink({ href: url }).run();
     }
-  };
+  }
 
-  const addImage = () => {
+  function addImage() {
     const url = window.prompt("Enter image URL");
     if (url) {
       editor.chain().focus().setImage({ src: url }).run();
     }
+  }
+
+  const sendNote = async (e) => {
+    e.preventDefault();
+    let formData = new FormData();
+    //const content = editor.getHTML();
+    const content = JSON.stringify(editor.getJSON());
+    formData.append("content", content);
+
+    try {
+      let response = await fetch("api/noteCreation.php", {
+        method: "POST",
+        body: formData,
+      });
+
+      const data = await response.json();
+
+      if (response.ok && data.status === "success") {
+        console.log("response " + data.status);
+        console.log("content received: " + data.message);
+      } else {
+        console.log("server error, content didn't get received");
+      }
+    } catch (e) {
+      console.error("Error: " + e);
+    }
   };
 
   return (
-    <form action="/api" method="POST" className="flex flex-col w-full bg-white">
+    <form
+      className="flex flex-col w-full bg-white"
+      onSubmit={(e) => sendNote(e)}
+    >
       <div className="flex items-center justify-between px-4 py-2 border-b border-[#eee] bg-[#fafafa]">
         <div className="flex items-center gap-1">
           <ToolbarButton
@@ -68,21 +97,16 @@ const Tiptap = ({ initialContent = "" }) => {
         </div>
       </div>
 
-      {/* EDITOR CONTENT AREA */}
       <div className="grow">
         <EditorContent editor={editor} />
       </div>
 
-      {/* HIDDEN INPUT FOR FORM SUBMISSION */}
-      <input type="hidden" name="content" value={editor.getHTML()} />
-
-      {/* FOOTER / SUBMIT AREA */}
       <div className="px-8 py-4 border-t border-[#eee] bg-[#fafafa] flex items-center justify-between">
         <div></div>
 
         <button
           type="submit"
-          className="px-5 py-1.5 bg-white border border-gray-350 text-gray-950 text-[14px] font-medium font-mono rounded hover:bg-gray-100 shadow-sm"
+          className="px-5 py-1.5 bg-white border border-gray-300 text-gray-950 text-[14px] font-medium font-mono rounded hover:bg-purple-200 hover:border-purple-500 "
         >
           Save Note
         </button>

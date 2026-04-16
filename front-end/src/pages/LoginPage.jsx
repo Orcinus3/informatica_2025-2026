@@ -15,7 +15,6 @@ function LoginPage() {
     event.preventDefault();
     setError("");
 
-    // https://developer.mozilla.org/en-US/docs/Web/API/FormData
     const formData = new FormData(event.target);
 
     try {

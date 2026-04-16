@@ -7,6 +7,10 @@ function Header() {
     navigate("/");
   }
 
+  function handleExploreClick() {
+    navigate("/explore");
+  }
+
   function handleNotesClick() {
     navigate("/notes");
   }
@@ -37,6 +41,12 @@ function Header() {
             Home
           </a>
           <a
+            onClick={handleExploreClick}
+            className="ml-7 cursor-pointer text-[#333] sans-font hover:text-purple-600"
+          >
+            Explore
+          </a>
+          <a
             onClick={handleNotesClick}
             className="ml-7 cursor-pointer text-[#333] sans-font hover:text-purple-600"
           >
@@ -53,7 +63,7 @@ function Header() {
           </a>
           <a
             onClick={handleSignInClick}
-            className="ml-7 cursor-pointer text-[#333] sans-font hover:text-purple-600"
+            className="ml-7 cursor-pointer text-purple-400 sans-font hover:text-purple-600"
           >
             Sign in
           </a>

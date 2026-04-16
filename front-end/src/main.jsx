@@ -8,6 +8,7 @@ import RegisterPage from "./pages/RegisterPage.jsx";
 import NotesPage from "./pages/NotesPage.jsx";
 import AboutPage from "./pages/AboutPage.jsx";
 import { AuthProvider } from "./context/AuthContext.jsx";
+import ExplorePage from "./pages/ExplorePage.jsx";
 
 const router = createBrowserRouter([
   {
@@ -31,6 +32,10 @@ const router = createBrowserRouter([
   {
     path: "/about",
     element: <AboutPage></AboutPage>,
+  },
+  {
+    path: "/explore",
+    element: <ExplorePage></ExplorePage>,
   },
 ]);
 
