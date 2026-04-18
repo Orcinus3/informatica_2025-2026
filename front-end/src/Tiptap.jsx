@@ -5,7 +5,7 @@ import Link from "@tiptap/extension-link";
 
 const Tiptap = ({ initialContent = "<p>Example Text</p>" }) => {
   const editor = useEditor({
-    extensions: [StarterKit, Underline],
+    extensions: [StarterKit],
     content: initialContent,
     editorProps: {
       attributes: {

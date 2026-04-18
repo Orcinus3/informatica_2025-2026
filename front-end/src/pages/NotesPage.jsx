@@ -1,23 +1,32 @@
-import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import { useAuth } from "../context/AuthContext";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
-import Tiptap from "../Tiptap";
+import { useEffect } from "react";
+import { generateHTML } from "@tiptap/core";
+import StarterKit from "@tiptap/starter-kit";
 
 function NotesPage() {
-  const navigate = useNavigate();
-  const { isLogged } = useAuth();
-
   useEffect(() => {
-    if (!isLogged) {
-      navigate("/login", { replace: true });
-    }
-  }, [isLogged, navigate]);
+    async function fetchData() {
+      const response = await fetch("api/fetchNotes.php", {
+        method: "POST",
+      });
 
-  if (!isLogged) {
-    return null;
-  }
+      const data = await response.json();
+
+      if (response.ok) {
+        console.log(data.status);
+
+        let record = data.records[0].content;
+        console.log(JSON.parse(record));
+        let parsed = JSON.parse(record);
+
+        const html = generateHTML(parsed, [StarterKit]);
+        console.log(html);
+      }
+    }
+
+    fetchData();
+  }, []);
 
   return (
     <div className="min-h-screen flex flex-col bg-[#f9f9f9] text-[#1a1a1a]">
@@ -30,13 +39,9 @@ function NotesPage() {
               Your Notes
             </h1>
             <p className="text-[17px] text-[#666] font-light serif-font">
-              A minimal space for your thoughts and ideas.
+              Every note you have created so far.
             </p>
           </div>
-        </div>
-
-        <div className="bg-white  border border-[#e5e5e5] shadow-sm ">
-          <Tiptap />
         </div>
       </main>
 

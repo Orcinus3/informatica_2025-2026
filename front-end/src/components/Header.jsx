@@ -1,7 +1,9 @@
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
 
 function Header() {
   const navigate = useNavigate();
+  const { isLogged, logout } = useAuth();
 
   function handleHomeClick() {
     navigate("/");
@@ -15,12 +17,16 @@ function Header() {
     navigate("/notes");
   }
 
+  function handleNotesCreationClick() {
+    navigate("/notes/creation");
+  }
+
   function handleAboutClick() {
     navigate("/about");
   }
 
-  function handleSignInClick() {
-    navigate("/login");
+  function handleLogOut() {
+    logout();
   }
 
   return (
@@ -53,6 +59,12 @@ function Header() {
             Your Notes
           </a>
           <a
+            onClick={handleNotesCreationClick}
+            className="ml-7 cursor-pointer text-[#333] sans-font hover:text-purple-600"
+          >
+            Create Notes
+          </a>
+          <a
             onClick={handleAboutClick}
             className="ml-7 cursor-pointer text-[#333] sans-font hover:text-purple-600"
           >
@@ -62,10 +74,10 @@ function Header() {
             GitHub
           </a>
           <a
-            onClick={handleSignInClick}
+            onClick={handleLogOut}
             className="ml-7 cursor-pointer text-purple-400 sans-font hover:text-purple-600"
           >
-            Sign in
+            Log out
           </a>
         </nav>
       </div>

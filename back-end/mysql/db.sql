@@ -21,6 +21,7 @@ CREATE TABLE Folders (
 CREATE TABLE Notes (
     note_id INT AUTO_INCREMENT PRIMARY KEY,
     title VARCHAR(100),
+    content TEXT,
     folder_id INT,
     category VARCHAR(255),
     FOREIGN KEY (folder_id) REFERENCES Folders (folder_id)

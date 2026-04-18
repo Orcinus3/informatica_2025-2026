@@ -6,6 +6,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import LoginPage from "./pages/LoginPage.jsx";
 import RegisterPage from "./pages/RegisterPage.jsx";
 import NotesPage from "./pages/NotesPage.jsx";
+import NoteCreationPage from "./pages/NoteCreationPage.jsx";
 import AboutPage from "./pages/AboutPage.jsx";
 import { AuthProvider } from "./context/AuthContext.jsx";
 import ExplorePage from "./pages/ExplorePage.jsx";
@@ -28,6 +29,10 @@ const router = createBrowserRouter([
   {
     path: "/notes",
     element: <NotesPage></NotesPage>,
+  },
+  {
+    path: "/notes/creation",
+    element: <NoteCreationPage></NoteCreationPage>,
   },
   {
     path: "/about",
