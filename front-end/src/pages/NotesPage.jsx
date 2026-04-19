@@ -3,8 +3,12 @@ import Footer from "../components/Footer";
 import { useEffect } from "react";
 import { generateHTML } from "@tiptap/core";
 import StarterKit from "@tiptap/starter-kit";
+import { useState } from "react";
+import { EditorContent, useEditor } from "@tiptap/react";
 
 function NotesPage() {
+  const [notes, setNotes] = useState([]);
+
   useEffect(() => {
     async function fetchData() {
       const response = await fetch("api/fetchNotes.php", {
@@ -15,13 +19,16 @@ function NotesPage() {
 
       if (response.ok) {
         console.log(data.status);
+        let records = data.records;
+        let arr = [];
 
-        let record = data.records[0].content;
-        console.log(JSON.parse(record));
-        let parsed = JSON.parse(record);
+        for (let i = 0; i < records.length; i++) {
+          let content = records[i].content;
+          let parsedContent = JSON.parse(content);
+          arr.push(parsedContent);
+        }
 
-        const html = generateHTML(parsed, [StarterKit]);
-        console.log(html);
+        setNotes(arr);
       }
     }
 
@@ -45,7 +52,31 @@ function NotesPage() {
         </div>
       </main>
 
+      <div className="">
+        {notes.map((note, index) => {
+          console.log(note);
+          return <NoteRenderer key={index} noteContent={note}></NoteRenderer>;
+        })}
+      </div>
+
       <Footer />
+    </div>
+  );
+}
+
+function NoteRenderer({ noteContent = "" }) {
+  const html = generateHTML(noteContent, [StarterKit]);
+
+  console.log(html);
+
+  const editor = useEditor({
+    extensions: [StarterKit],
+    content: html,
+  });
+
+  return (
+    <div className="bg-white p-6 rounded-lg shadow-md">
+      <EditorContent editor={editor}></EditorContent>
     </div>
   );
 }
