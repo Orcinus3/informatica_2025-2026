@@ -2,6 +2,7 @@ import { useEditor, EditorContent } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import Underline from "@tiptap/extension-underline";
 import Link from "@tiptap/extension-link";
+import { useState } from "react";
 
 const Tiptap = ({ initialContent = "<p>Example Text</p>" }) => {
   const editor = useEditor({
@@ -14,6 +15,8 @@ const Tiptap = ({ initialContent = "<p>Example Text</p>" }) => {
       },
     },
   });
+
+  const [title, setTitle] = useState("");
 
   function setLink() {
     const url = window.prompt("Enter the URL");
@@ -35,9 +38,10 @@ const Tiptap = ({ initialContent = "<p>Example Text</p>" }) => {
     //const content = editor.getHTML();
     const content = JSON.stringify(editor.getJSON());
     formData.append("content", content);
+    formData.append("title", title);
 
     try {
-      let response = await fetch("api/noteCreation.php", {
+      let response = await fetch("/api/noteCreation.php", {
         method: "POST",
         body: formData,
       });
@@ -102,7 +106,11 @@ const Tiptap = ({ initialContent = "<p>Example Text</p>" }) => {
       </div>
 
       <div className="px-8 py-4 border-t border-[#eee] bg-[#fafafa] flex items-center justify-between">
-        <div></div>
+        <input
+          className="bg-white text-center py-1 shadow focus:outline-purple-500 focus:bg-purple-50 font-mono"
+          placeholder="Title"
+          onChange={(e) => setTitle(e.target.value)}
+        ></input>
 
         <button
           type="submit"

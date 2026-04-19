@@ -13,11 +13,13 @@ if ($_SERVER["REQUEST_METHOD"] === "OPTIONS") {
 
 try {
     $data = $_POST["content"];
+    $title = $_POST["title"];
 
     $query =
-        "INSERT INTO notes (title, content, folder_id, category) VALUES ('title', :content, null, 'category')";
+        "INSERT INTO notes (title, content, folder_id, category) VALUES (:title, :content, null, 'category')";
     $stmt = $conn->prepare($query);
     $stmt->bindParam(":content", $data);
+    $stmt->bindParam(":title", $title);
     $stmt->execute();
 
     echo json_encode([
@@ -25,7 +27,7 @@ try {
         "message" => "Successfully created a new record in the Notes table",
     ]);
 } catch (Exception $e) {
-    http_response_code(401);
+    http_response_code(500);
     echo json_encode([
         "status" => "error",
         "message" => "Couldn't create a new record, something has gone wrong",
