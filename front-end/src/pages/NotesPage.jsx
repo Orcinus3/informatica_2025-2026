@@ -10,30 +10,30 @@ function NotesPage() {
   const [notes, setNotes] = useState([]);
 
   useEffect(() => {
-    async function fetchData() {
-      const response = await fetch("api/fetchNotes.php", {
-        method: "POST",
-      });
-
-      const data = await response.json();
-      console.log(data);
-
-      if (response.ok) {
-        console.log(data.status);
-        let records = data.records;
-        let arr = [];
-
-        for (let i = 0; i < records.length; i++) {
-          let content = records[i];
-          arr.push(content);
-        }
-
-        setNotes(arr);
-      }
-    }
-
     fetchData();
   }, []);
+
+  async function fetchData() {
+    const response = await fetch("/api/fetchNotes.php", {
+      method: "POST",
+    });
+
+    const data = await response.json();
+    console.log(data);
+
+    if (response.ok) {
+      console.log(data.status);
+      let records = data.records;
+      let arr = [];
+
+      for (let i = 0; i < records.length; i++) {
+        let content = records[i];
+        arr.push(content);
+      }
+
+      setNotes(arr);
+    }
+  }
 
   return (
     <div className="min-h-screen flex flex-col bg-[#f9f9f9] text-[#1a1a1a]">
@@ -52,7 +52,13 @@ function NotesPage() {
         </div>
         <div className="">
           {notes.map((note, index) => {
-            return <NoteRenderer key={index} note={note}></NoteRenderer>;
+            return (
+              <NoteRenderer
+                setNotes={setNotes}
+                key={note.note_id}
+                note={note}
+              ></NoteRenderer>
+            );
           })}
         </div>
       </main>
@@ -62,8 +68,9 @@ function NotesPage() {
   );
 }
 
-function NoteRenderer({ note = "" }) {
+function NoteRenderer({ note = "", setNotes }) {
   const noteContent = JSON.parse(note.content);
+  const noteId = note.note_id;
   const noteTitle = note.title;
   const html = generateHTML(noteContent, [StarterKit]);
 
@@ -79,11 +86,41 @@ function NoteRenderer({ note = "" }) {
     },
   });
 
+  async function deleteNote() {
+    const formData = new FormData();
+    formData.append("id", noteId);
+
+    try {
+      const response = await fetch("/api/deleteNote.php", {
+        method: "POST",
+        body: formData,
+      });
+
+      const data = await response.json();
+
+      console.log(data.status);
+      if (response.ok && data.status === "success") {
+        console.log(data.message);
+        setNotes((prevNotes) =>
+          prevNotes.filter((note) => note.note_id !== noteId),
+        );
+      } else {
+        console.log(data.message);
+      }
+    } catch (e) {
+      console.error(e);
+    }
+  }
+
   return (
     <div className="bg-white p-6 rounded-lg shadow-md">
-      <div className="serif-font text-2xl font-light pb-2 border-b border-purple-300">
-        {noteTitle}
+      <div className="flex justify-between">
+        <div className="serif-font text-2xl font-light pb-2 border-b border-purple-300">
+          {noteTitle}
+        </div>
+        <button onClick={() => deleteNote()}>{noteId}</button>
       </div>
+
       <EditorContent editor={editor}></EditorContent>
     </div>
   );
