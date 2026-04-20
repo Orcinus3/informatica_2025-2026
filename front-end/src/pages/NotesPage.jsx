@@ -115,9 +115,11 @@ function NoteRenderer({ note = "", setNotes }) {
   return (
     <div className="bg-white rounded-lg shadow-md mb-20">
       <div className="py-2.5 px-6 bg-[#fafafa] flex justify-between items-center border-b border-[#eee]">
-        <div className="serif-font text-2xl font-light pb-2 ">{noteTitle}</div>
+        <div className="serif-font text-2xl font-light pb-2 text-purple-500">
+          {noteTitle}
+        </div>
         <button
-          className="sans-font p-2 hover:text-red-500"
+          className="sans-font p-2 text-red-500 hover:text-red-400 "
           onClick={() => deleteNote()}
         >
           Delete

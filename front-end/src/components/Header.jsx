@@ -27,10 +27,11 @@ function Header() {
 
   function handleLogOut() {
     logout();
+    navigate("/login");
   }
 
   return (
-    <header className="border-b-[1px] border-b-[#eee] bg-white">
+    <header className="border-b-[1px] border-b-[#eee] bg-white sticky top-0 z-50">
       <div className="w-full mx-auto p-5 flex justify-between items-center">
         <a
           onClick={handleHomeClick}
