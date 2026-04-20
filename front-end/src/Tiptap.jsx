@@ -107,6 +107,7 @@ const Tiptap = ({ initialContent = "<p>Example Text</p>" }) => {
 
       <div className="px-8 py-4 border-t border-[#eee] bg-[#fafafa] flex items-center justify-between">
         <input
+          required
           className="bg-white text-center py-1 shadow focus:outline-purple-500 focus:bg-purple-50 font-mono"
           placeholder="Title"
           onChange={(e) => setTitle(e.target.value)}
