@@ -3,13 +3,17 @@ import { createContext, useState, useContext } from "react";
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(null); // null = not logged in
+  const [user, setUser] = useState(null);
+  const [userId, setUserId] = useState(null);
 
   const login = (userData) => setUser(userData);
+  const loginUserId = (userId) => setUserId(userId);
   const logout = () => setUser(null);
 
   return (
-    <AuthContext.Provider value={{ user, isLogged: !!user, login, logout }}>
+    <AuthContext.Provider
+      value={{ userId, user, isLogged: !!user, login, logout, loginUserId }}
+    >
       {children}
     </AuthContext.Provider>
   );

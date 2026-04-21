@@ -4,7 +4,7 @@ import { useAuth } from "../context/AuthContext";
 
 function LoginPage() {
   const navigate = useNavigate();
-  const { login } = useAuth();
+  const { login, loginUserId } = useAuth();
   const [error, setError] = useState("");
 
   function handleClick() {
@@ -27,6 +27,7 @@ function LoginPage() {
 
       if (response.ok && data.status === "success") {
         login(data.username);
+        loginUserId(data.user_id);
 
         navigate("/");
       } else {

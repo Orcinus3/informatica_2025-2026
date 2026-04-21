@@ -3,7 +3,7 @@ import { useAuth } from "../context/AuthContext";
 
 function Header() {
   const navigate = useNavigate();
-  const { isLogged, logout } = useAuth();
+  const { isLogged, logout, user } = useAuth();
 
   function handleHomeClick() {
     navigate("/");
@@ -78,7 +78,7 @@ function Header() {
             onClick={handleLogOut}
             className="ml-7 cursor-pointer text-purple-400 sans-font hover:text-purple-600"
           >
-            Log out
+            Log out (Username {user})
           </a>
         </nav>
       </div>

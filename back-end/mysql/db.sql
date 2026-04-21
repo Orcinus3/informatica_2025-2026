@@ -23,6 +23,7 @@ CREATE TABLE Notes (
     title VARCHAR(100),
     content TEXT,
     folder_id INT,
+    user_id INT,
     category VARCHAR(255),
     FOREIGN KEY (folder_id) REFERENCES Folders (folder_id)
 )

@@ -5,17 +5,23 @@ import { generateHTML } from "@tiptap/core";
 import StarterKit from "@tiptap/starter-kit";
 import { useState } from "react";
 import { EditorContent, useEditor } from "@tiptap/react";
+import { useAuth } from "../context/AuthContext";
 
 function NotesPage() {
   const [notes, setNotes] = useState([]);
+  const { userId } = useAuth();
 
   useEffect(() => {
     fetchData();
   }, []);
 
   async function fetchData() {
+    const formData = new FormData();
+    formData.append("userId", userId);
+
     const response = await fetch("/api/fetchNotes.php", {
       method: "POST",
+      body: formData,
     });
 
     const data = await response.json();
@@ -102,7 +108,7 @@ function NoteRenderer({ note = "", setNotes }) {
       if (response.ok && data.status === "success") {
         console.log(data.message);
         setNotes((prevNotes) =>
-          prevNotes.filter((note) => note.note_id !== noteId),
+          prevNotes.filter((note) => note.note_id !== noteId)
         );
       } else {
         console.log(data.message);

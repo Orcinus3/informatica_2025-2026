@@ -14,12 +14,14 @@ if ($_SERVER["REQUEST_METHOD"] === "OPTIONS") {
 try {
     $data = $_POST["content"];
     $title = $_POST["title"];
+    $userId = $_POST["userId"];
 
     $query =
-        "INSERT INTO notes (title, content, folder_id, category) VALUES (:title, :content, null, 'category')";
+        "INSERT INTO notes (title, content, folder_id, category, user_id) VALUES (:title, :content, null, 'category', :userId)";
     $stmt = $conn->prepare($query);
     $stmt->bindParam(":content", $data);
     $stmt->bindParam(":title", $title);
+    $stmt->bindParam(":userId", $userId);
     $stmt->execute();
 
     echo json_encode([
@@ -33,5 +35,3 @@ try {
         "message" => "Couldn't create a new record, something has gone wrong",
     ]);
 }
-
-?>

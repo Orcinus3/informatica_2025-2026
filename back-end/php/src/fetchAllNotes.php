@@ -11,11 +11,9 @@ if ($_SERVER["REQUEST_METHOD"] === "OPTIONS") {
     exit();
 }
 
-$userId = $_POST["userId"];
 
-$query = "SELECT note_id,title,content FROM Notes WHERE user_id = :userId";
+$query = "SELECT note_id,title,content FROM Notes";
 $stmt = $conn->prepare($query);
-$stmt->bindParam(":userId", $userId);
 $stmt->execute();
 $notes = $stmt->fetchAll(PDO::FETCH_ASSOC);
 

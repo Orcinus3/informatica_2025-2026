@@ -3,6 +3,7 @@ import StarterKit from "@tiptap/starter-kit";
 import Underline from "@tiptap/extension-underline";
 import Link from "@tiptap/extension-link";
 import { useState } from "react";
+import { useAuth } from "./context/AuthContext";
 
 const Tiptap = ({ initialContent = "<p>Example Text</p>" }) => {
   const editor = useEditor({
@@ -17,6 +18,7 @@ const Tiptap = ({ initialContent = "<p>Example Text</p>" }) => {
   });
 
   const [title, setTitle] = useState("");
+  const { userId } = useAuth();
 
   function setLink() {
     const url = window.prompt("Enter the URL");
@@ -39,6 +41,8 @@ const Tiptap = ({ initialContent = "<p>Example Text</p>" }) => {
     const content = JSON.stringify(editor.getJSON());
     formData.append("content", content);
     formData.append("title", title);
+    formData.append("userId", userId);
+    console.log("inserted user id:" + userId);
 
     try {
       let response = await fetch("/api/noteCreation.php", {
