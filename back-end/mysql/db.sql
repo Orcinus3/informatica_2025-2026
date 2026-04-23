@@ -28,6 +28,27 @@ CREATE TABLE Notes (
     FOREIGN KEY (folder_id) REFERENCES Folders (folder_id)
 )
 
+CREATE TABLE Categories (
+    category_id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100)
+)
+
+INSERT INTO Categories(name) VALUES
+    ("Science"),
+    ("Mathematics"),
+    ("History"),
+    ("Literature"),
+    ("Physics"),
+    ("Chemistry");
+
+CREATE TABLE Note_Categories (
+    category_id INT,
+    note_id INT,
+    FOREIGN KEY (category_id) REFERENCES Categories (category_id),
+    FOREIGN KEY (note_id) REFERENCES Notes (note_id),
+    PRIMARY KEY (category_id, note_id)
+)
+
 CREATE TABLE Preferences ()
 
 CREATE TABLE Admins ()

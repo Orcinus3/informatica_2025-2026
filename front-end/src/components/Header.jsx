@@ -71,7 +71,11 @@ function Header() {
           >
             About
           </a>
-          <a className="ml-7 cursor-pointer text-[#333] sans-font hover:text-purple-600">
+          <a
+            target="_blank"
+            href="https://github.com/Orcinus3/informatica_2025-2026"
+            className="ml-7 cursor-pointer text-[#333] sans-font hover:text-purple-600"
+          >
             GitHub
           </a>
           <a

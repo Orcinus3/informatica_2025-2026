@@ -4,6 +4,7 @@ import Underline from "@tiptap/extension-underline";
 import Link from "@tiptap/extension-link";
 import { useState } from "react";
 import { useAuth } from "./context/AuthContext";
+import { useEffect } from "react";
 
 const Tiptap = ({ initialContent = "<p>Example Text</p>" }) => {
   const editor = useEditor({
@@ -17,7 +18,12 @@ const Tiptap = ({ initialContent = "<p>Example Text</p>" }) => {
     },
   });
 
+  useEffect(() => {
+    getCategories();
+  }, []);
+
   const [title, setTitle] = useState("");
+  const [categories, setCategories] = useState("");
   const { userId } = useAuth();
 
   function setLink() {
@@ -62,6 +68,26 @@ const Tiptap = ({ initialContent = "<p>Example Text</p>" }) => {
       console.error("Error: " + e);
     }
   };
+
+  async function getCategories() {
+    try {
+      const response = await fetch("/api/fetchCategories.php", {
+        method: "POST",
+      });
+
+      const data = await response.json();
+
+      if (response.ok && data.status === "success") {
+        console.log(data.status);
+        console.log(data.message);
+        console.log(data.content);
+      } else {
+        console.error("response not ok: " + data.message);
+      }
+    } catch (e) {
+      console.error("Error: " + e);
+    }
+  }
 
   return (
     <form
