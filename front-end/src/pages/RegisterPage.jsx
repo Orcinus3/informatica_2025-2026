@@ -37,7 +37,9 @@ function RegisterPage() {
       <div className="flex flex-col items-center gap-4">
         <h1 className="text-[2rem] serif-font text-purple-800">Register</h1>
 
-        {message && <p className="text-red-500 text-sm font-mono">{message}</p>}
+        {message && (
+          <p className="text-purple-500 text-sm font-mono">{message}</p>
+        )}
 
         <form
           onSubmit={handleRegister}

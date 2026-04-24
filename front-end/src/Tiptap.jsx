@@ -23,7 +23,8 @@ const Tiptap = ({ initialContent = "<p>Example Text</p>" }) => {
   }, []);
 
   const [title, setTitle] = useState("");
-  const [categories, setCategories] = useState("");
+  const [selectedCategoryIndex, setSelectedCategoryIndex] = useState("");
+  const [categories, setCategories] = useState([]);
   const { userId } = useAuth();
 
   function setLink() {
@@ -45,9 +46,11 @@ const Tiptap = ({ initialContent = "<p>Example Text</p>" }) => {
     let formData = new FormData();
     //const content = editor.getHTML();
     const content = JSON.stringify(editor.getJSON());
+    let categoryId = categories[selectedCategoryIndex].category_id;
     formData.append("content", content);
     formData.append("title", title);
     formData.append("userId", userId);
+    formData.append("categoryId", categoryId);
     console.log("inserted user id:" + userId);
 
     try {
@@ -78,9 +81,15 @@ const Tiptap = ({ initialContent = "<p>Example Text</p>" }) => {
       const data = await response.json();
 
       if (response.ok && data.status === "success") {
+        let arrCategories = [];
+        let content = data.content;
         console.log(data.status);
         console.log(data.message);
-        console.log(data.content);
+        for (let i = 0; i < content.length; i++) {
+          console.log(content[i]);
+          arrCategories.push(content[i]);
+        }
+        setCategories(arrCategories);
       } else {
         console.error("response not ok: " + data.message);
       }
@@ -142,6 +151,28 @@ const Tiptap = ({ initialContent = "<p>Example Text</p>" }) => {
           placeholder="Title"
           onChange={(e) => setTitle(e.target.value)}
         ></input>
+
+        <select
+          className="font-mono"
+          required
+          onChange={(e) => {
+            let index = e.target.value;
+            let category = categories[index].name;
+            console.log(category);
+            setSelectedCategoryIndex(index);
+          }}
+        >
+          <option value="" selected disabled hidden>
+            Category
+          </option>
+          {categories.map((category, index) => {
+            return (
+              <option key={index} value={index}>
+                {category.name}
+              </option>
+            );
+          })}
+        </select>
 
         <button
           type="submit"

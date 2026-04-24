@@ -15,6 +15,7 @@ try {
     $data = $_POST["content"];
     $title = $_POST["title"];
     $userId = $_POST["userId"];
+    $category_id = $_POST["categoryId"];
 
     $query =
         "INSERT INTO notes (title, content, folder_id, category, user_id) VALUES (:title, :content, null, 'category', :userId)";
@@ -24,10 +25,23 @@ try {
     $stmt->bindParam(":userId", $userId);
     $stmt->execute();
 
+
+
+    $last_id = $conn->lastInsertId();
+    $query2 = "INSERT INTO Note_Categories (category_id, note_id) VALUES (:category_id, :note_Id)";
+    $stmt = $conn->prepare($query2);
+    $stmt->bindParam(":category_id", $category_id);
+    $stmt->bindParam(":note_id", $last_id);
+    $stmt->execute();
+
     echo json_encode([
         "status" => "success",
         "message" => "Successfully created a new record in the Notes table",
     ]);
+
+
+    //$stmt->bindParam(":", $note);
+
 } catch (Exception $e) {
     http_response_code(500);
     echo json_encode([
