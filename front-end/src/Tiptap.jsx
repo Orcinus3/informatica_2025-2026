@@ -23,8 +23,10 @@ const Tiptap = ({ initialContent = "<p>Example Text</p>" }) => {
   }, []);
 
   const [title, setTitle] = useState("");
-  const [selectedCategoryIndex, setSelectedCategoryIndex] = useState("");
+  const [selectedCategories, setSelectedCategories] = useState([]);
+  const [showCategoryDropdown, setShowCategoryDropdown] = useState(false);
   const [categories, setCategories] = useState([]);
+
   const { userId } = useAuth();
 
   function setLink() {
@@ -46,11 +48,12 @@ const Tiptap = ({ initialContent = "<p>Example Text</p>" }) => {
     let formData = new FormData();
     //const content = editor.getHTML();
     const content = JSON.stringify(editor.getJSON());
-    let categoryId = categories[selectedCategoryIndex].category_id;
+    selectedCategories.forEach((index) => {
+      formData.append("categoryId[]", categories[index].category_id);
+    });
     formData.append("content", content);
     formData.append("title", title);
     formData.append("userId", userId);
-    formData.append("categoryId", categoryId);
     console.log("inserted user id:" + userId);
 
     try {
@@ -66,6 +69,7 @@ const Tiptap = ({ initialContent = "<p>Example Text</p>" }) => {
         console.log("content received: " + data.message);
       } else {
         console.log("server error, content didn't get received");
+        console.log("debug msg: " + data.debug);
       }
     } catch (e) {
       console.error("Error: " + e);
@@ -152,27 +156,49 @@ const Tiptap = ({ initialContent = "<p>Example Text</p>" }) => {
           onChange={(e) => setTitle(e.target.value)}
         ></input>
 
-        <select
-          className="font-mono"
-          required
-          onChange={(e) => {
-            let index = e.target.value;
-            let category = categories[index].name;
-            console.log(category);
-            setSelectedCategoryIndex(index);
-          }}
-        >
-          <option value="" selected disabled hidden>
-            Category
-          </option>
-          {categories.map((category, index) => {
-            return (
-              <option key={index} value={index}>
-                {category.name}
-              </option>
-            );
-          })}
-        </select>
+        <div className="relative">
+          <button
+            type="button"
+            onClick={() => setShowCategoryDropdown(!showCategoryDropdown)}
+            className="font-mono px-3 py-1 border border-gray-300 rounded hover:bg-purple-200 hover:border-purple-500 text-left min-w-[120px]"
+          >
+            {selectedCategories.length === 0
+              ? "Select Categories"
+              : `${selectedCategories.length} selected`}
+          </button>
+
+          {showCategoryDropdown && (
+            <div className="absolute bottom-full left-0 mb-2 bg-white border border-gray-300 rounded shadow-lg p-2 w-[250px] max-h-[300px] overflow-y-auto">
+              {categories.map((category, index) => (
+                <label
+                  key={index}
+                  className="flex items-center gap-2 py-1 cursor-pointer hover:bg-gray-100 rounded px-1"
+                >
+                  <input
+                    type="checkbox"
+                    value={index}
+                    checked={selectedCategories.includes(index.toString())}
+                    onChange={(e) => {
+                      if (e.target.checked) {
+                        setSelectedCategories([
+                          ...selectedCategories,
+                          e.target.value,
+                        ]);
+                      } else {
+                        setSelectedCategories(
+                          selectedCategories.filter(
+                            (i) => i !== e.target.value,
+                          ),
+                        );
+                      }
+                    }}
+                  />
+                  <span className="text-sm font-mono">{category.name}</span>
+                </label>
+              ))}
+            </div>
+          )}
+        </div>
 
         <button
           type="submit"

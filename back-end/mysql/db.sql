@@ -11,13 +11,6 @@ CREATE TABLE Users (
     password VARCHAR(50)
 )
 
-CREATE TABLE Folders (
-    folder_id INT AUTO_INCREMENT PRIMARY KEY,
-    title VARCHAR(100),
-    user_id INT,
-    FOREIGN KEY (user_id) REFERENCES Users (user_id)
-)
-
 CREATE TABLE Notes (
     note_id INT AUTO_INCREMENT PRIMARY KEY,
     title VARCHAR(100),
@@ -25,7 +18,7 @@ CREATE TABLE Notes (
     folder_id INT,
     user_id INT,
     category VARCHAR(255),
-    FOREIGN KEY (folder_id) REFERENCES Folders (folder_id)
+    FOREIGN KEY (folder_id) REFERENCES Folders (folder_id) ON DELETE CASCADE
 )
 
 CREATE TABLE Categories (
@@ -44,11 +37,20 @@ INSERT INTO Categories(name) VALUES
 CREATE TABLE Note_Categories (
     category_id INT,
     note_id INT,
-    FOREIGN KEY (category_id) REFERENCES Categories (category_id),
-    FOREIGN KEY (note_id) REFERENCES Notes (note_id),
+    FOREIGN KEY (category_id) REFERENCES Categories (category_id) ON DELETE CASCADE,
+    FOREIGN KEY (note_id) REFERENCES Notes (note_id) ON DELETE CASCADE,
     PRIMARY KEY (category_id, note_id)
 )
 
 CREATE TABLE Preferences ()
 
 CREATE TABLE Admins ()
+
+/*
+CREATE TABLE Folders (
+    folder_id INT AUTO_INCREMENT PRIMARY KEY,
+    title VARCHAR(100),
+    user_id INT,
+    FOREIGN KEY (user_id) REFERENCES Users (user_id) ON DELETE CASCADE
+)
+*/

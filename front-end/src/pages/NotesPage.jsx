@@ -108,7 +108,7 @@ function NoteRenderer({ note = "", setNotes }) {
       if (response.ok && data.status === "success") {
         console.log(data.message);
         setNotes((prevNotes) =>
-          prevNotes.filter((note) => note.note_id !== noteId)
+          prevNotes.filter((note) => note.note_id !== noteId),
         );
       } else {
         console.log(data.message);
