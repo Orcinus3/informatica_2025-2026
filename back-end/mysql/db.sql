@@ -18,7 +18,7 @@ CREATE TABLE Notes (
     folder_id INT,
     user_id INT,
     category VARCHAR(255),
-    FOREIGN KEY (folder_id) REFERENCES Folders (folder_id) ON DELETE CASCADE
+    FOREIGN KEY (user_id) REFERENCES Users (user_id) ON DELETE CASCADE
 )
 
 CREATE TABLE Categories (
