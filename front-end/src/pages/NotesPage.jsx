@@ -75,6 +75,8 @@ function NotesPage() {
                 key={note.note_id}
                 note={note}
                 category={categories[index]}
+                setCategories={setCategories}
+                index={index}
               ></NoteRenderer>
             );
           })}
@@ -86,7 +88,7 @@ function NotesPage() {
   );
 }
 
-function NoteRenderer({ note = "", setNotes, category }) {
+function NoteRenderer({ note = "", setNotes, category, setCategories, index }) {
   const noteContent = JSON.parse(note.content);
   const noteId = note.note_id;
   const noteTitle = note.title;
@@ -120,7 +122,11 @@ function NoteRenderer({ note = "", setNotes, category }) {
       if (response.ok && data.status === "success") {
         console.log(data.message);
         setNotes((prevNotes) =>
-          prevNotes.filter((note) => note.note_id !== noteId)
+          prevNotes.filter((note) => note.note_id !== noteId),
+        );
+
+        setCategories((prevCategories) =>
+          prevCategories.filter((_, i) => i !== index),
         );
       } else {
         console.log(data.message);
