@@ -16,6 +16,7 @@ Le sue funzionalità sono:
 - pagina di login
 - pagina per creazione note
 - pagina per vedere le note create
+- pagina Explore dove gli utenti possono convididere le loro note
 
 ## Tecnologie utilizzate per il frontend
 
