@@ -9,6 +9,7 @@ import { useAuth } from "../context/AuthContext";
 
 function NotesPage() {
   const [notes, setNotes] = useState([]);
+  const [categories, setCategories] = useState([]);
   const { userId } = useAuth();
 
   useEffect(() => {
@@ -30,14 +31,24 @@ function NotesPage() {
     if (response.ok) {
       console.log(data.status);
       let records = data.records;
-      let arr = [];
+      let arrRecords = [];
 
       for (let i = 0; i < records.length; i++) {
         let content = records[i];
-        arr.push(content);
+        arrRecords.push(content);
       }
 
-      setNotes(arr);
+      setNotes(arrRecords);
+
+      let categories = data.note_categories;
+      let arrCategories = [];
+
+      for (let i = 0; i < categories.length; i++) {
+        let category = categories[i];
+        arrCategories.push(category);
+      }
+
+      setCategories(arrCategories);
     }
   }
 
@@ -63,6 +74,7 @@ function NotesPage() {
                 setNotes={setNotes}
                 key={note.note_id}
                 note={note}
+                category={categories[index]}
               ></NoteRenderer>
             );
           })}
@@ -74,7 +86,7 @@ function NotesPage() {
   );
 }
 
-function NoteRenderer({ note = "", setNotes }) {
+function NoteRenderer({ note = "", setNotes, category }) {
   const noteContent = JSON.parse(note.content);
   const noteId = note.note_id;
   const noteTitle = note.title;
@@ -108,7 +120,7 @@ function NoteRenderer({ note = "", setNotes }) {
       if (response.ok && data.status === "success") {
         console.log(data.message);
         setNotes((prevNotes) =>
-          prevNotes.filter((note) => note.note_id !== noteId),
+          prevNotes.filter((note) => note.note_id !== noteId)
         );
       } else {
         console.log(data.message);
@@ -124,6 +136,7 @@ function NoteRenderer({ note = "", setNotes }) {
         <div className="serif-font text-2xl font-light pb-2 text-purple-500">
           {noteTitle}
         </div>
+        <div>{category.map((categoryObj) => categoryObj["category_id"])}</div>
         <button
           className="sans-font p-2 text-red-500 hover:text-red-400 "
           onClick={() => deleteNote()}
