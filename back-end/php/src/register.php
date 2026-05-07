@@ -2,15 +2,6 @@
 
 require "./config/connect.php";
 
-header("Content-Type: application/json");
-header("Access-Control-Allow-Origin: http://localhost:5173");
-header("Access-Control-Allow-Methods: POST, OPTIONS");
-header("Access-Control-Allow-Headers: Content-Type");
-
-if ($_SERVER["REQUEST_METHOD"] === "OPTIONS") {
-    exit();
-}
-
 $username = $_POST["username"] ?? "";
 $email = $_POST["email"] ?? "";
 $password = $_POST["password"] ?? "";
@@ -23,24 +14,23 @@ $stmt->bindParam(":password", $password);
 $stmt->execute();
 $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
-
 if ($user) {
     http_response_code(401);
     echo json_encode([
         "status" => "error",
-        "message" => "Account already exists"
+        "message" => "Account already exists",
     ]);
 } else {
-
-    $query2 = 'INSERT INTO Users(username, email, password) VALUES(:username, :email, :password)';
+    $query2 =
+        "INSERT INTO Users(username, email, password) VALUES(:username, :email, :password)";
     $stmt = $conn->prepare($query2);
-    $stmt->bindParam(':username', $username, PDO::PARAM_STR);
-    $stmt->bindParam(':email', $email, PDO::PARAM_STR);
-    $stmt->bindParam(':password', $password, PDO::PARAM_STR);
+    $stmt->bindParam(":username", $username, PDO::PARAM_STR);
+    $stmt->bindParam(":email", $email, PDO::PARAM_STR);
+    $stmt->bindParam(":password", $password, PDO::PARAM_STR);
 
     $stmt->execute();
     echo json_encode([
-        'status' => 'success',
-        'message' => 'Account successfully created'
+        "status" => "success",
+        "message" => "Account successfully created",
     ]);
 }
