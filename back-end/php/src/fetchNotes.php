@@ -2,15 +2,6 @@
 
 require "./config/connect.php";
 
-header("Content-Type: application/json");
-header("Access-Control-Allow-Origin: http://localhost:5173");
-header("Access-Control-Allow-Methods: POST, OPTIONS");
-header("Access-Control-Allow-Headers: Content-Type");
-
-if ($_SERVER["REQUEST_METHOD"] === "OPTIONS") {
-    exit();
-}
-
 $userId = $_POST["userId"];
 
 $query = "SELECT note_id,title,content FROM Notes WHERE user_id = :userId";
@@ -22,7 +13,8 @@ $notes = $stmt->fetchAll();
 if (!empty($notes)) {
     $categories = [];
     foreach ($notes as $note) {
-        $query2 = "SELECT * FROM note_categories WHERE note_id = :note_id";
+        $query2 =
+            "SELECT nc.category_id, c.name FROM note_categories nc JOIN Categories c ON nc.category_id = c.category_id WHERE nc.note_id = :note_id";
         $stmt2 = $conn->prepare($query2);
         $stmt2->bindParam(":note_id", $note["note_id"]);
         $stmt2->execute();

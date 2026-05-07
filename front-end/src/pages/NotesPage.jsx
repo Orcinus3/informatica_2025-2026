@@ -142,7 +142,16 @@ function NoteRenderer({ note = "", setNotes, category, setCategories, index }) {
         <div className="serif-font text-2xl font-light pb-2 text-purple-500">
           {noteTitle}
         </div>
-        <div>{category.map((categoryObj) => categoryObj["category_id"])}</div>
+        <div className="flex gap-2">
+          {category.map((categoryObj) => {
+            const categoryName = categoryObj["name"];
+            return (
+              <span className="text-sm font-mono text-gray-500">
+                {categoryName}
+              </span>
+            );
+          })}
+        </div>
         <button
           className="sans-font p-2 text-red-500 hover:text-red-400 "
           onClick={() => deleteNote()}
