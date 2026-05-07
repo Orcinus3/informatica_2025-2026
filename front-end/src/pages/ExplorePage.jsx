@@ -1,7 +1,26 @@
+import { useEffect } from "react";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
 
 function ExplorePage() {
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  async function fetchData() {
+    const response = await fetch("/api/fetchAllNotes.php", {
+      method: "POST",
+    });
+
+    let data = await response.json();
+
+    if (response.ok && data.status === "success") {
+      console.log(data);
+    } else {
+      console.log("error");
+    }
+  }
+
   return (
     <div className="flex flex-col min-h-[100vh]">
       <Header></Header>
