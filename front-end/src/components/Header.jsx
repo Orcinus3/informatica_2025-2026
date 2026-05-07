@@ -65,12 +65,12 @@ function Header() {
           >
             Create Notes
           </a>
-          <a
+          {/*<a
             onClick={handleAboutClick}
             className="ml-7 cursor-pointer text-[#333] sans-font hover:text-purple-600"
           >
             About
-          </a>
+          </a> */}
           <a
             target="_blank"
             href="https://github.com/Orcinus3/informatica_2025-2026"
