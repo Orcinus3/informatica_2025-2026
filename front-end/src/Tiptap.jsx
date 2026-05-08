@@ -2,13 +2,14 @@ import { useEditor, EditorContent } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import Underline from "@tiptap/extension-underline";
 import Link from "@tiptap/extension-link";
+import Image from "@tiptap/extension-image";
 import { useState } from "react";
 import { useAuth } from "./context/AuthContext";
 import { useEffect } from "react";
 
 const Tiptap = ({ initialContent = "<p>Example Text</p>" }) => {
   const editor = useEditor({
-    extensions: [StarterKit],
+    extensions: [StarterKit, Image],
     content: initialContent,
     editorProps: {
       attributes: {
@@ -45,6 +46,10 @@ const Tiptap = ({ initialContent = "<p>Example Text</p>" }) => {
 
   const sendNote = async (e) => {
     e.preventDefault();
+    if (selectedCategories.length === 0) {
+      alert("Select atleast one category");
+      return;
+    }
     let formData = new FormData();
     //const content = editor.getHTML();
     const content = JSON.stringify(editor.getJSON());
@@ -186,9 +191,7 @@ const Tiptap = ({ initialContent = "<p>Example Text</p>" }) => {
                         ]);
                       } else {
                         setSelectedCategories(
-                          selectedCategories.filter(
-                            (i) => i !== e.target.value,
-                          ),
+                          selectedCategories.filter((i) => i !== e.target.value)
                         );
                       }
                     }}

@@ -26,13 +26,15 @@ CREATE TABLE Categories (
     name VARCHAR(100)
 )
 
-INSERT INTO Categories(name) VALUES
-    ("Science"),
+INSERT INTO
+    Categories (name)
+VALUES ("Science"),
     ("Mathematics"),
     ("History"),
     ("Literature"),
     ("Physics"),
-    ("Chemistry");
+    ("Chemistry"),
+    ("Any");
 
 CREATE TABLE Note_Categories (
     category_id INT,
@@ -48,9 +50,9 @@ CREATE TABLE Admins ()
 
 /*
 CREATE TABLE Folders (
-    folder_id INT AUTO_INCREMENT PRIMARY KEY,
-    title VARCHAR(100),
-    user_id INT,
-    FOREIGN KEY (user_id) REFERENCES Users (user_id) ON DELETE CASCADE
+folder_id INT AUTO_INCREMENT PRIMARY KEY,
+title VARCHAR(100),
+user_id INT,
+FOREIGN KEY (user_id) REFERENCES Users (user_id) ON DELETE CASCADE
 )
 */

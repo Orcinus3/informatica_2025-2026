@@ -6,6 +6,7 @@ import StarterKit from "@tiptap/starter-kit";
 import { useState } from "react";
 import { EditorContent, useEditor } from "@tiptap/react";
 import { useAuth } from "../context/AuthContext";
+import Image from "@tiptap/extension-image";
 
 function NotesPage() {
   const [notes, setNotes] = useState([]);
@@ -92,10 +93,10 @@ function NoteRenderer({ note = "", setNotes, category, setCategories, index }) {
   const noteContent = JSON.parse(note.content);
   const noteId = note.note_id;
   const noteTitle = note.title;
-  const html = generateHTML(noteContent, [StarterKit]);
+  const html = generateHTML(noteContent, [StarterKit, Image]);
 
   const editor = useEditor({
-    extensions: [StarterKit],
+    extensions: [StarterKit, Image],
     content: html,
     editable: false,
     editorProps: {

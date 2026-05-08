@@ -4,6 +4,7 @@ import Header from "../components/Header";
 import { generateHTML } from "@tiptap/core";
 import StarterKit from "@tiptap/starter-kit";
 import { EditorContent, useEditor } from "@tiptap/react";
+import Image from "@tiptap/extension-image";
 
 function ExplorePage() {
   const [notes, setNotes] = useState([]);
@@ -49,7 +50,18 @@ function ExplorePage() {
   return (
     <div className="flex flex-col min-h-[100vh]">
       <Header></Header>
+
       <div className="flex-grow container mx-auto px-6 py-12 max-w-4xl">
+        <div className="flex flex-col md:flex-row justify-between items-start mb-12 gap-6">
+          <div>
+            <h1 className="text-5xl font-medium text-[#1a1a1a] mb-3 serif-font">
+              Explore
+            </h1>
+            <p className="text-[17px] text-[#666] font-light serif-font">
+              Notes created by other users
+            </p>
+          </div>
+        </div>
         <div className="">
           {notes.map((note, index) => {
             return (
@@ -74,10 +86,10 @@ function NoteRenderer({ note = "", setNotes, category, setCategories, index }) {
   const noteContent = JSON.parse(note.content);
   const noteId = note.note_id;
   const noteTitle = note.title;
-  const html = generateHTML(noteContent, [StarterKit]);
+  const html = generateHTML(noteContent, [StarterKit, Image]);
 
   const editor = useEditor({
-    extensions: [StarterKit],
+    extensions: [StarterKit, Image],
     content: html,
     editable: false,
     editorProps: {
