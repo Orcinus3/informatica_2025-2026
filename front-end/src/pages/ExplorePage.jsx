@@ -1,6 +1,9 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
+import { generateHTML } from "@tiptap/core";
+import StarterKit from "@tiptap/starter-kit";
+import { EditorContent, useEditor } from "@tiptap/react";
 
 function ExplorePage() {
   const [notes, setNotes] = useState([]);
@@ -46,7 +49,7 @@ function ExplorePage() {
   return (
     <div className="flex flex-col min-h-[100vh]">
       <Header></Header>
-      <div className="grow flex items-center justify-center bg-[#f9f9f9]">
+      <div className="flex-grow container mx-auto px-6 py-12 max-w-4xl">
         <div className="">
           {notes.map((note, index) => {
             return (
@@ -90,6 +93,11 @@ function NoteRenderer({ note = "", setNotes, category, setCategories, index }) {
       <div className="py-2.5 px-6 bg-[#fafafa] flex justify-between items-center border-b border-[#eee]">
         <div className="serif-font text-2xl font-light pb-2 text-purple-500">
           {noteTitle}
+        </div>
+        <div className="flex gap-2">
+          <span className="text-sm font-mono text-gray-500">
+            Created by {category[0]["username"]}
+          </span>
         </div>
         <div className="flex gap-2">
           {category.map((categoryObj) => {

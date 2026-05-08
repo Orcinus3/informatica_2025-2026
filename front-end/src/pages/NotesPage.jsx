@@ -122,11 +122,11 @@ function NoteRenderer({ note = "", setNotes, category, setCategories, index }) {
       if (response.ok && data.status === "success") {
         console.log(data.message);
         setNotes((prevNotes) =>
-          prevNotes.filter((note) => note.note_id !== noteId),
+          prevNotes.filter((note) => note.note_id !== noteId)
         );
 
         setCategories((prevCategories) =>
-          prevCategories.filter((_, i) => i !== index),
+          prevCategories.filter((_, i) => i !== index)
         );
       } else {
         console.log(data.message);
