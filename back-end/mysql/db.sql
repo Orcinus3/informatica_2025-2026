@@ -34,7 +34,7 @@ VALUES ("Science"),
     ("Literature"),
     ("Physics"),
     ("Chemistry"),
-    ("Any");
+    ("None");
 
 CREATE TABLE Note_Categories (
     category_id INT,

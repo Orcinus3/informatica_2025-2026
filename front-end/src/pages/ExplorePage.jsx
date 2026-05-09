@@ -9,6 +9,8 @@ import Image from "@tiptap/extension-image";
 function ExplorePage() {
   const [notes, setNotes] = useState([]);
   const [categories, setCategories] = useState([]);
+  const [categoriesNames, setcategoriesNames] = useState(["All"]);
+  const [selectedCategory, setSelectedCategory] = useState("All");
 
   useEffect(() => {
     fetchData();
@@ -33,23 +35,61 @@ function ExplorePage() {
 
       setNotes(arrRecords);
 
-      let categories = data.note_categories;
+      let categoriesData = data.note_categories;
       let arrCategories = [];
 
-      for (let i = 0; i < categories.length; i++) {
-        let category = categories[i];
+      for (let i = 0; i < categoriesData.length; i++) {
+        let category = categoriesData[i];
         arrCategories.push(category);
       }
 
       setCategories(arrCategories);
+
+      const categoryNames = new Set(["All"]);
+      for (let i = 0; i < categoriesData.length; i++) {
+        for (let j = 0; j < categoriesData[i].length; j++) {
+          categoryNames.add(categoriesData[i][j]["name"]);
+        }
+      }
+      setcategoriesNames(Array.from(categoryNames));
     } else {
       console.log("error");
     }
   }
 
+  const filteredNotes =
+    selectedCategory === "All"
+      ? notes
+      : notes.filter((note, index) =>
+          categories[index].some((categ) => categ.name === selectedCategory),
+        );
+
+  const idToCategoryMap = {};
+  for (let i = 0; i < notes.length; i++) {
+    idToCategoryMap[notes[i].note_id] = categories[i];
+  }
+
   return (
     <div className="flex flex-col min-h-[100vh]">
       <Header></Header>
+
+      <nav className="border-b border-[#eee] bg-white sticky top-16 px-6 py-3">
+        <div className="mx-auto max-w-4xl flex gap-2">
+          {categoriesNames.map((categoryName) => (
+            <button
+              key={categoryName}
+              onClick={() => setSelectedCategory(categoryName)}
+              className={`px-4 py-1.5  text-sm sans-font ${
+                selectedCategory === categoryName
+                  ? "text-purple-500 border-b"
+                  : "text-[#333] hover:text-purple-600"
+              }`}
+            >
+              {categoryName}
+            </button>
+          ))}
+        </div>
+      </nav>
 
       <div className="flex-grow container mx-auto px-6 py-12 max-w-4xl">
         <div className="flex flex-col md:flex-row justify-between items-start mb-12 gap-6">
@@ -63,15 +103,14 @@ function ExplorePage() {
           </div>
         </div>
         <div className="">
-          {notes.map((note, index) => {
+          {filteredNotes.map((note) => {
             return (
               <NoteRenderer
                 setNotes={setNotes}
                 key={note.note_id}
                 note={note}
-                category={categories[index]}
+                category={idToCategoryMap[note.note_id]}
                 setCategories={setCategories}
-                index={index}
               ></NoteRenderer>
             );
           })}
