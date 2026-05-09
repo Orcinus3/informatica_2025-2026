@@ -6,7 +6,10 @@ $username = $_POST["username"] ?? "";
 $email = $_POST["email"] ?? "";
 $password = $_POST["password"] ?? "";
 
-$query1 = "SELECT * FROM Users WHERE username = :username AND email = :email AND password = :password";
+$conn->beginTransaction();
+
+$query1 =
+    "SELECT * FROM Users WHERE username = :username AND email = :email AND password = :password";
 $stmt = $conn->prepare($query1);
 $stmt->bindParam(":username", $username);
 $stmt->bindParam(":email", $email);
@@ -15,6 +18,7 @@ $stmt->execute();
 $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
 if ($user) {
+    $conn->rollBack();
     http_response_code(401);
     echo json_encode([
         "status" => "error",
@@ -29,6 +33,9 @@ if ($user) {
     $stmt->bindParam(":password", $password, PDO::PARAM_STR);
 
     $stmt->execute();
+
+    $conn->commit();
+
     echo json_encode([
         "status" => "success",
         "message" => "Account successfully created",

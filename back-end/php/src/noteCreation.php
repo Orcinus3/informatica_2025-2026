@@ -8,6 +8,8 @@ try {
     $userId = $_POST["userId"];
     $category_ids = $_POST["categoryId"] ?? [];
 
+    $conn->beginTransaction();
+
     $query =
         "INSERT INTO notes (title, content, folder_id, user_id) VALUES (:title, :content, null, :userId)";
     $stmt = $conn->prepare($query);
@@ -29,11 +31,17 @@ try {
         }
     }
 
+    $conn->commit();
+
     echo json_encode([
         "status" => "success",
-        "message" => "Successfully created a new record in the Notes table",
+        "message" => "Note created successfully with categories assigned",
     ]);
 } catch (Exception $e) {
+    if ($conn->inTransaction()) {
+        $conn->rollBack();
+    }
+
     http_response_code(500);
     echo json_encode([
         "status" => "error",
