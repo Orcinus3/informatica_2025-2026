@@ -8,9 +8,9 @@ $password = $_POST["password"] ?? "";
 
 $conn->beginTransaction();
 
-$query1 =
-    "SELECT * FROM Users WHERE username = :username AND email = :email AND password = :password";
-$stmt = $conn->prepare($query1);
+$stmt = $conn->prepare(
+    "CALL CheckUserCredentials(:username, :email, :password)",
+);
 $stmt->bindParam(":username", $username);
 $stmt->bindParam(":email", $email);
 $stmt->bindParam(":password", $password);
