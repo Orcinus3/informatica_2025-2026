@@ -43,15 +43,3 @@ CREATE TABLE Note_Categories (
     PRIMARY KEY (category_id, note_id)
 )
 
-CREATE TABLE Preferences ()
-
-CREATE TABLE Admins ()
-
-/*
-CREATE TABLE Folders (
-folder_id INT AUTO_INCREMENT PRIMARY KEY,
-title VARCHAR(100),
-user_id INT,
-FOREIGN KEY (user_id) REFERENCES Users (user_id) ON DELETE CASCADE
-)
-*/
