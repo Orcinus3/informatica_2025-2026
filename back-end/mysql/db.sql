@@ -24,8 +24,7 @@ CREATE TABLE Notes (
 CREATE TABLE Categories (
     category_id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(100)
-)
-
+);
 INSERT INTO
     Categories (name)
 VALUES ("Science"),

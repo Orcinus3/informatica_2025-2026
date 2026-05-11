@@ -11,7 +11,7 @@ try {
     $conn->beginTransaction();
 
     $query =
-        "INSERT INTO notes (title, content, folder_id, user_id) VALUES (:title, :content, null, :userId)";
+        "INSERT INTO Notes (title, content, folder_id, user_id) VALUES (:title, :content, null, :userId)";
     $stmt = $conn->prepare($query);
     $stmt->bindParam(":content", $data);
     $stmt->bindParam(":title", $title);

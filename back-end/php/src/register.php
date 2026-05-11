@@ -15,7 +15,7 @@ $stmt->bindParam(":username", $username);
 $stmt->bindParam(":email", $email);
 $stmt->bindParam(":password", $password);
 $stmt->execute();
-$user = $stmt->fetch(PDO::FETCH_ASSOC);
+$user = $stmt->fetch();
 
 if ($user) {
     $conn->rollBack();
@@ -28,9 +28,9 @@ if ($user) {
     $query2 =
         "INSERT INTO Users(username, email, password) VALUES(:username, :email, :password)";
     $stmt = $conn->prepare($query2);
-    $stmt->bindParam(":username", $username, PDO::PARAM_STR);
-    $stmt->bindParam(":email", $email, PDO::PARAM_STR);
-    $stmt->bindParam(":password", $password, PDO::PARAM_STR);
+    $stmt->bindParam(":username", $username);
+    $stmt->bindParam(":email", $email);
+    $stmt->bindParam(":password", $password);
 
     $stmt->execute();
 
