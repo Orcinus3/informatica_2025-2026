@@ -12,7 +12,7 @@ $stmt->bindParam(":username", $username);
 $stmt->bindParam(":email", $email);
 $stmt->bindParam(":password", $password);
 $stmt->execute();
-$user = $stmt->fetch(PDO::FETCH_ASSOC);
+$user = $stmt->fetch();
 
 if ($user) {
     echo json_encode([

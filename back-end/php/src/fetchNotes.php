@@ -14,7 +14,7 @@ if (!empty($notes)) {
     $categories = [];
     foreach ($notes as $note) {
         $query2 =
-            "SELECT nc.category_id, c.name FROM note_categories nc JOIN Categories c ON nc.category_id = c.category_id WHERE nc.note_id = :note_id";
+            "SELECT nc.category_id, c.name FROM Note_Categories nc JOIN Categories c ON nc.category_id = c.category_id WHERE nc.note_id = :note_id";
         $stmt2 = $conn->prepare($query2);
         $stmt2->bindParam(":note_id", $note["note_id"]);
         $stmt2->execute();

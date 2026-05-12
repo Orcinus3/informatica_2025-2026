@@ -24,8 +24,7 @@ CREATE TABLE Notes (
 CREATE TABLE Categories (
     category_id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(100)
-)
-
+);
 INSERT INTO
     Categories (name)
 VALUES ("Science"),
@@ -34,7 +33,7 @@ VALUES ("Science"),
     ("Literature"),
     ("Physics"),
     ("Chemistry"),
-    ("Any");
+    ("None");
 
 CREATE TABLE Note_Categories (
     category_id INT,
@@ -44,15 +43,3 @@ CREATE TABLE Note_Categories (
     PRIMARY KEY (category_id, note_id)
 )
 
-CREATE TABLE Preferences ()
-
-CREATE TABLE Admins ()
-
-/*
-CREATE TABLE Folders (
-folder_id INT AUTO_INCREMENT PRIMARY KEY,
-title VARCHAR(100),
-user_id INT,
-FOREIGN KEY (user_id) REFERENCES Users (user_id) ON DELETE CASCADE
-)
-*/

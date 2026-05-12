@@ -35,13 +35,15 @@ function HomePage() {
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-16">
             <button
               onClick={() => navigate("/notes/creation")}
-              className="px-5 py-1.5 bg-white border border-gray-300 text-gray-950 text-[14px] font-medium font-mono rounded hover:bg-purple-200 hover:border-purple-500"
+              className="mt-2 h-12 px-6 py-3 rounded bg-white border border-gray-300
+                         transition-all hover:bg-purple-50 hover:border-purple-500 sans-font"
             >
               Create New Note
             </button>
             <button
               onClick={() => navigate("/explore")}
-              className="px-5 py-1.5 bg-white border border-gray-300 text-gray-950 text-[14px] font-medium font-mono rounded hover:bg-purple-200 hover:border-purple-500"
+              className="mt-2 h-12 px-6 py-3 rounded bg-white border border-gray-300
+                         transition-all hover:bg-purple-50 hover:border-purple-500 sans-font"
             >
               Explore Shared Notes
             </button>
@@ -57,7 +59,8 @@ function HomePage() {
           </p>
           <button
             onClick={() => navigate("/notes/creation")}
-            className="px-5 py-1.5 bg-white border border-gray-300 text-gray-950 text-[14px] font-medium font-mono rounded hover:bg-purple-200 hover:border-purple-500"
+            className="mt-2 h-12 px-6 py-3 rounded bg-white border border-gray-300
+                       transition-all hover:bg-purple-50 hover:border-purple-500 sans-font"
           >
             Create Your First Note
           </button>
