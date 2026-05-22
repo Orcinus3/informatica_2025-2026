@@ -7,6 +7,8 @@ $note_id = $_POST["id"] ?? null;
 $query = "SELECT * FROM Notes WHERE note_id = :note_id";
 
 try {
+    $conn->beginTransaction();
+
     $stmt = $conn->prepare($query);
     $stmt->bindParam(":note_id", $note_id);
     $stmt->execute();
@@ -29,6 +31,10 @@ try {
         ]);
     }
 } catch (Exception $e) {
+    if ($conn->inTransaction()) {
+        $conn->rollBack();
+    }
+
     http_response_code(500);
     echo json_encode([
         "status" => "error",
